@@ -1,0 +1,17 @@
+### GET request with a header
+GET http://localhost:8080/orders
+Accept: application/json
+
+
+### Get Order by ID
+GET http://localhost:8080/orders/1
+Accept: application/json
+
+### POST request with a header
+POST http://localhost:8080/orders
+Content-Type: application/json
+
+{
+  "customer_name": "John Doe",
+  "ordered_at" : "2019-01-01T00:00:00.000Z"
+}

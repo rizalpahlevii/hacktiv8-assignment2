@@ -1,13 +1,14 @@
 package config
 
 import (
-	"database/sql"
 	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 	"log"
 )
 
 var (
-	db  *sql.DB
+	db  *gorm.DB
 	err error
 )
 
@@ -19,18 +20,15 @@ func handleDatabaseConnection() {
 	dbname := "hacktiv8_assignment2"
 	connectionString := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
 
-	db, err = sql.Open("postgres", connectionString)
+	db, err = gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 	if err != nil {
 		log.Panic("Error connecting to database", err)
 	}
 
-	err = db.Ping()
-	if err != nil {
-		log.Panic("Error connecting to database", err)
-	}
+	log.Println("Database connection established")
 }
 
-func GetDatabaseConnection() *sql.DB {
+func GetDatabaseConnection() *gorm.DB {
 	if db == nil {
 		handleDatabaseConnection()
 	}
