@@ -2,11 +2,11 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"hacktiv8-assignment2/app/configs"
+	"hacktiv8-assignment2/config"
 )
 
 func main() {
-	configs.GetDatabaseConnection()
+	config.GetDatabaseConnection()
 	r := gin.Default()
 
 	r.Run()
