@@ -1,17 +1,55 @@
-### GET request with a header
+### Get Orders
 GET http://localhost:8080/orders
 Accept: application/json
 
-
 ### Get Order by ID
-GET http://localhost:8080/orders/1
+GET http://localhost:8080/orders/5
 Accept: application/json
 
-### POST request with a header
+### Create Order
 POST http://localhost:8080/orders
 Content-Type: application/json
 
 {
   "customer_name": "John Doe",
-  "ordered_at" : "2019-01-01T00:00:00.000Z"
+  "ordered_at" : "2019-01-01T00:00:00.000Z",
+  "items" : [
+    {
+      "item_code" : "123",
+      "description" : "Item 1",
+      "quantity" : 2
+    },
+    {
+      "item_code" : "21",
+      "description" : "Item 4",
+      "quantity" : 3
+    }
+  ]
+}
+
+
+### Delete Order
+DELETE http://localhost:8080/orders/6
+Accept: application/json
+
+
+### Update Order
+PUT http://localhost:8080/orders/9
+Content-Type: application/json
+
+{
+  "customer_name": "John Doe",
+  "ordered_at" : "2019-01-01T00:00:00.000Z",
+  "items" : [
+    {
+      "item_code" : "123",
+      "description" : "Item 1",
+      "quantity" : 2
+    },
+    {
+      "item_code" : "321",
+      "description" : "Item 1",
+      "quantity" : 3
+    }
+  ]
 }

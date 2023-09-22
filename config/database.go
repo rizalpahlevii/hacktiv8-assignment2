@@ -18,6 +18,7 @@ func handleDatabaseConnection() {
 	user := "postgres"
 	password := "root"
 	dbname := "hacktiv8_assignment2"
+	
 	connectionString := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
 
 	db, err = gorm.Open(postgres.Open(connectionString), &gorm.Config{})

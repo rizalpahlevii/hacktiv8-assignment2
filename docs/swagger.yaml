@@ -1,0 +1,142 @@
+definitions:
+  helpers.FormatCollectionResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+    type: object
+  helpers.FormatResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  requests.NewOrderItemRequest:
+    properties:
+      description:
+        type: string
+      item_code:
+        type: string
+      quantity:
+        type: integer
+    type: object
+  requests.NewOrderRequest:
+    properties:
+      customer_name:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/requests.NewOrderItemRequest'
+        type: array
+      ordered_at:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /orders:
+    get:
+      consumes:
+      - application/json
+      description: Get all orders
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.FormatCollectionResponse'
+      summary: Get all orders
+      tags:
+      - orders
+    post:
+      consumes:
+      - application/json
+      description: Create a new order
+      parameters:
+      - description: Order
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/requests.NewOrderRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/helpers.FormatResponse'
+      summary: Create a new order
+      tags:
+      - orders
+  /orders/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete order by id
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.FormatResponse'
+      summary: Delete order by id
+      tags:
+      - orders
+    get:
+      consumes:
+      - application/json
+      description: Get order by id
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.FormatResponse'
+      summary: Get order by id
+      tags:
+      - orders
+    put:
+      consumes:
+      - application/json
+      description: Update order by id
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Order
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/requests.NewOrderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.FormatResponse'
+      summary: Update order by id
+      tags:
+      - orders
+swagger: "2.0"

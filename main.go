@@ -2,8 +2,11 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"hacktiv8-assignment2/app/models"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"hacktiv8-assignment2/config"
+	"hacktiv8-assignment2/docs"
+	"hacktiv8-assignment2/models"
 	"hacktiv8-assignment2/routes"
 )
 
@@ -18,6 +21,18 @@ func main() {
 	router := gin.Default()
 	routes.OrderRoutes(router)
 
+	docs.SwaggerInfo.Title = "Hacktiv8 Assignment 2"
+	docs.SwaggerInfo.Description = "Order API"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "localhost:8080"
+	docs.SwaggerInfo.Schemes = []string{"http"}
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "Welcome to Order API",
+		})
+	})
 	err = router.Run()
 	if err != nil {
 		panic(err)

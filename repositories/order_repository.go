@@ -2,9 +2,17 @@ package repositories
 
 import (
 	"gorm.io/gorm"
-	"hacktiv8-assignment2/app/models"
-	requests "hacktiv8-assignment2/app/requests/orders"
+	"hacktiv8-assignment2/models"
+	requests "hacktiv8-assignment2/requests/orders"
 )
+
+type OrderRepositoryInterface interface {
+	GetOrders() ([]models.Order, error)
+	CreateOrder(request requests.NewOrderRequest) (models.Order, error)
+	GetOrderById(id int) (models.Order, error)
+	UpdateOrder(order models.Order, request requests.NewOrderRequest) (models.Order, error)
+	DeleteOrder(order models.Order) error
+}
 
 type OrderRepository struct {
 	db *gorm.DB
@@ -16,8 +24,8 @@ func NewOrderRepository(db *gorm.DB) OrderRepository {
 
 func (repository *OrderRepository) GetOrders() ([]models.Order, error) {
 	var orders []models.Order
-	result := repository.db.Find(&orders)
-	return orders, result.Error
+	err := repository.db.Preload("Items").Find(&orders).Error
+	return orders, err
 }
 
 func (repository *OrderRepository) CreateOrder(request requests.NewOrderRequest) (models.Order, error) {
@@ -31,7 +39,7 @@ func (repository *OrderRepository) CreateOrder(request requests.NewOrderRequest)
 
 func (repository *OrderRepository) GetOrderById(id int) (models.Order, error) {
 	var order models.Order
-	result := repository.db.First(&order, id)
+	result := repository.db.Preload("Items").First(&order, id)
 	return order, result.Error
 }
 
